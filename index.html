@@ -13,11 +13,65 @@
             href="./images/favicon-32x32.png"
         />
 
+        <!-- Font awesome -->
+        <script
+            src="https://kit.fontawesome.com/8ed0002a41.js"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- Font -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;600;700&display=swap"
+            rel="stylesheet"
+        />
+
         <title>Frontend Mentor | Ping coming soon page</title>
 
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
+        <div id="container">
+            <img id="logo" src="images/logo.svg" alt="Ping logo" />
+
+            <p id="title">We are launching <span id="titleBold">soon!</span></p>
+            <p id="description">Subscribe and get notified</p>
+
+            <div id="emailContainer">
+                <input
+                    id="emailInput"
+                    type="email"
+                    placeholder="Your email address"
+                />
+                <div id="emailErrors">
+                    <p id="emptyError" class="errorMessage">
+                        Whoops! It looks like you forgot to add your email
+                    </p>
+                    <p id="invalidError" class="errorMessage">
+                        Please provide a valid email address
+                    </p>
+                </div>
+                <button id="emailButton" onclick="CTAClicked()">
+                    Notify Me
+                </button>
+            </div>
+
+            <img
+                id="preview"
+                src="images/illustration-dashboard.png"
+                alt="Dashboard preview"
+            />
+
+            <div id="socialButtons">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+            </div>
+
+            <p id="copyrightNotice">
+                &copy; Copyright Ping. All rights reserved
+            </p>
+        </div>
+
         <!-- Frontent Mentor attribution-->
         <footer>
             <p class="attribution">
@@ -29,5 +83,55 @@
                 >. Coded by <a href="#">Johannes</a>.
             </p>
         </footer>
+
+        <script>
+            function CTAClicked() {
+                var emailField = document.getElementById("emailInput");
+                var email = emailField.value;
+                var emptyError = document.getElementById("emptyError");
+                var invalidError = document.getElementById("invalidError");
+
+                // Hide potential previous error messages
+                emailField.classList.remove("inputError");
+                emptyError.classList.remove("errorVisible");
+                invalidError.classList.remove("errorVisible");
+
+                // Make sure the user entered something into the email input field
+                if (email.length == 0) {
+                    emailField.classList.add("inputError");
+                    emptyError.classList.add("errorVisible");
+                    return;
+                }
+
+                // Make sure the email is valid (name@host.tld)
+                var validEmail = true;
+
+                // Validate the name
+                var atIndex = email.indexOf("@");
+                if (atIndex < 0 || email.substring(0, atIndex).length == 0) {
+                    validEmail = false;
+                }
+
+                // Validate the host
+                var dotIndex = email.indexOf(".");
+                if (
+                    dotIndex < 0 ||
+                    email.substring(atIndex + 1, dotIndex).length == 0
+                ) {
+                    validEmail = false;
+                }
+
+                // Validate the tld
+                if (email.substring(dotIndex + 1, email.length).length == 0) {
+                    validEmail = false;
+                }
+
+                // Show an error if the email is not valid
+                if (!validEmail) {
+                    emailField.classList.add("inputError");
+                    invalidError.classList.add("errorVisible");
+                }
+            }
+        </script>
     </body>
 </html>
